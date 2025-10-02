@@ -8,11 +8,9 @@ public class RoomSlot : MonoBehaviour
     public RoomType currentRoomType;
     public NPCData currentNPC;
 
-
     [Header("Timing")]
     public float monthDurationSeconds = 10f;
     private Coroutine incomeRoutine;
-
 
     [Header("Events")]
     public UnityEvent<RoomSlot> OnRoomBecameEmpty;
@@ -27,14 +25,12 @@ public class RoomSlot : MonoBehaviour
     public bool IsOccupied => currentNPC != null && currentRoomType != null;
     public bool CanPlaceRoom => currentRoomType == null;
 
-
     public void PlaceRoom(RoomType roomType)
     {
         currentRoomType = roomType;
         TrySpawnNPC();
         StartIncomeCycle();
     }
-
 
     public void RemoveRoom()
     {
@@ -44,12 +40,10 @@ public class RoomSlot : MonoBehaviour
         OnRoomBecameEmpty?.Invoke(this);
     }
 
-
     public void UpgradeRoom(RoomType newRoomType)
     {
         currentRoomType = newRoomType;
     }
-
 
     public void TrySpawnNPC()
     {
@@ -57,20 +51,17 @@ public class RoomSlot : MonoBehaviour
         currentNPC = new NPCData() { npcName = "Guest" + Random.Range(1, 9999), happiness = 50, preferredRoomType = currentRoomType.typeName };
     }
 
-
     private void StartIncomeCycle()
     {
         if (incomeRoutine != null) StopCoroutine(incomeRoutine);
         incomeRoutine = StartCoroutine(IncomeCycle());
     }
 
-
     private void StopIncomeCycle()
     {
         if (incomeRoutine != null) StopCoroutine(incomeRoutine);
         incomeRoutine = null;
     }
-
 
     private IEnumerator IncomeCycle()
     {
@@ -81,7 +72,6 @@ public class RoomSlot : MonoBehaviour
         }
     }
 
-
     private void ResolveMonth()
     {
         if (!IsOccupied)
@@ -90,14 +80,11 @@ public class RoomSlot : MonoBehaviour
             return;
         }
 
-
         PlayerWallet.Instance.AddMoney(currentRoomType.monthlyRent);
         UIManager.Instance?.ShowFloatingText(transform.position, $"+{currentRoomType.monthlyRent}");
 
-
         float chance = currentRoomType.stayChance;
         chance *= Mathf.Clamp01(0.5f + currentNPC.happiness / 200f);
-
 
         if (Random.value > chance)
         {
@@ -109,7 +96,6 @@ public class RoomSlot : MonoBehaviour
                 if (Random.value > 0.5f) TrySpawnNPC();
             }
         }
-
 
         UIManager.Instance?.UpdateMoneyDisplay(PlayerWallet.Instance.Money);
     }
