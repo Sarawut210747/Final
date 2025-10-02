@@ -5,14 +5,11 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-
     [Header("Slots")]
     public List<RoomSlot> allSlots = new List<RoomSlot>();
 
-
     [Header("Offline/Time")]
     public float realSecondsPerGameMonth = 10f;
-
 
     private void Awake()
     {
@@ -20,7 +17,6 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
-
 
     private void Start()
     {
@@ -40,4 +36,5 @@ public class GameManager : MonoBehaviour
             if (s.CanPlaceRoom) return s;
         return null;
     }
+
 }
