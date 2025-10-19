@@ -2,46 +2,31 @@ using UnityEngine;
 
 public class RoomSlot : MonoBehaviour
 {
-    [Header("State")]
-    public bool isOccupied = false;
-    public RoomBase placedRoom;
+    [SerializeField] private Transform anchor;
+    [SerializeField] private RoomInstance roomPrefab;
 
-    [Header("Floor/Support")]
-    public int floorIndex = 0;
-    public RoomSlot slotBelow;
-    public bool requireSupportFromBelow = true;
+    public RoomInstance Current { get; private set; }
+    public bool HasRoom => Current != null;
 
-    [Header("Visual Hint")]
-    [SerializeField] private SpriteRenderer hintRenderer;
-    [SerializeField] private Color hintOn = new(1f, 1f, 1f, 0.35f);
-    [SerializeField] private Color hintOff = new(1f, 1f, 1f, 0f);
-
-    private void Reset()
+    public void Setup(RoomInstance instance)
     {
-        if (!hintRenderer)
-            hintRenderer = transform.Find("Hint")?.GetComponent<SpriteRenderer>();
+        Current = instance;
     }
 
-    public void ShowHint(bool show)
+    public bool Build(EconomyController eco, RoomSpecSO spec)
     {
-        if (!hintRenderer) return;
-        hintRenderer.color = show ? hintOn : hintOff;
+        if (HasRoom) return false;
+        if (!eco.TrySpend(spec.buildCost)) return false;
+
+        var inst = Instantiate(roomPrefab, anchor);
+        inst.Initialize(spec, 1);
+        Current = inst;
+        return true;
     }
 
-    public Vector3 GetSnapPosition() => transform.position;
-
-    public void Place(RoomSpecSO spec)
+    public bool Upgrade(EconomyController eco)
     {
-        if (placedRoom) Clear();
-        placedRoom = RoomFactory.CreateRoomInstance(spec, transform, GetSnapPosition());
-        isOccupied = true;
-        ShowHint(false);
-    }
-
-    public void Clear()
-    {
-        if (placedRoom) Destroy(placedRoom.gameObject);
-        placedRoom = null;
-        isOccupied = false;
+        if (!HasRoom) return false;
+        return Current.TryUpgrade(eco);
     }
 }

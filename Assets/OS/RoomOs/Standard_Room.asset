@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80c7b8e26fad2b64a8ac05ac4003c9f1, type: 3}
+  m_Name: Standard_Room
+  m_EditorClassIdentifier: 
+  roomName: Standard Room
+  icon: {fileID: -6118453146159910627, guid: c0b7c447d3e77d541897b6a4c451068e, type: 3}
+  buildCost: 100
+  upgradeBaseCost: 80
+  maxLevel: 3
+  baseMonthlyRentPerLevel: 3c0000005a00000082000000
+  baseSatisfactionPerLevel:
+  - 0
+  - 0.05
+  - 0.1
