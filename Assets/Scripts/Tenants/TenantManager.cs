@@ -23,7 +23,7 @@ public class TenantManager : MonoBehaviour
 
     public void OnMonthlyTick_Contracts()
     {
-        // ลดสัญญา + จัดการออก/ต่อสัญญาอย่างง่าย (MVP)
+
         for (int i = _tenants.Count - 1; i >= 0; i--)
         {
             var t = _tenants[i];
@@ -33,22 +33,17 @@ public class TenantManager : MonoBehaviour
 
             if (t.MonthsLeft == 0)
             {
-                // ต่อสัญญาแบบง่าย: โอกาส 60% ถ้าพึงพอใจ >= 50
                 bool renew = (t.Satisfaction >= 50f) && (Random.value <= 0.6f);
                 if (renew)
                 {
                     t.MonthsLeft = defaultArchetype.RollContractMonths();
-                    // สามารถปรับค่าเช่าตามเลเวลห้องได้
                 }
                 else
                 {
-                    // ย้ายออก = ล้างการผูกห้อง
                     t.RoomId = null;
                 }
             }
         }
-
-        // หลังตัดรอบ ลองเติมผู้เช่าใหม่ลงห้องว่าง
         FillVacancies();
     }
 

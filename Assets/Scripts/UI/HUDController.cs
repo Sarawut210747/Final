@@ -19,6 +19,5 @@ public class HUDController : MonoBehaviour
         if (tenantsText) tenantsText.text = $"Tenants: {tenantManager.ActiveTenantCount()}";
     }
 
-    // ปุ่มบนมือถือ
     public void OnSpeed(int s) { timeController.SetSpeed(s); }
 }

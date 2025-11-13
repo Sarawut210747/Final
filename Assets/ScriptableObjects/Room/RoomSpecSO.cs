@@ -13,7 +13,7 @@ public class RoomSpecSO : ScriptableObject
     public int maxLevel = 3;
 
     [Header("Effects (per level)")]
-    public int[] baseMonthlyRentPerLevel = new int[] { 60, 90, 130 };
+    public int[] baseMonthlyRentPerLevel = new int[] { 70, 90, 130 };
     public float[] baseSatisfactionPerLevel = new float[] { 0.0f, 0.05f, 0.1f };
 
     public int GetMonthlyRent(int level)

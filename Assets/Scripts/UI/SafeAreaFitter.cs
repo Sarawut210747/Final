@@ -37,7 +37,6 @@ public class SafeAreaFitter : MonoBehaviour
         if (safe == _lastSafe) return;
         _lastSafe = safe;
 
-        // กันเคส width/height เป็น 0 ชั่วคราวตอนโหลด
         float w = Mathf.Max(1, Screen.width);
         float h = Mathf.Max(1, Screen.height);
 
